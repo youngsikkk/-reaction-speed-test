@@ -1,6 +1,6 @@
 "use client"
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import "./styles.css";
 
 export default function Home() {
   const [isWaiting, setIsWaiting] = useState(false);
@@ -30,8 +30,6 @@ export default function Home() {
     setMessage("화면이 바뀔 때까지 기다려주세요.");
     blockClick();
   }
-
-  
 
   const gameStart = () => {
     if(isStart) return;
@@ -76,17 +74,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{display:"flex", flexDirection:"column", alignItems: "center"}}>
-      <h1 style={{marginBottom:"50px"}}>반응속도 테스트</h1>
-      <div style={{width: "500px", height:"500px", backgroundColor: backColor,display:"flex", justifyContent:"center", alignItems: "flex-end"}} onClick={isStart ? timeCheck : gameStart}>
-        <span>
-          {message}
-        </span>
+    <div className="container">
+      <h1 className="title">반응속도 테스트</h1>
+      <div className="game-box" style={{ backgroundColor: backColor }} onClick={isStart ? timeCheck : gameStart}>
+        <span className="message">{message}</span>
       </div>
-      <div style = {{display: "flex", flexDirection:"column", alignItems: "center", marginTop: "20px"}}>
-        {scores.map((score, idx) => {
-          return <span>{idx + 1}번째 시도 {score}ms</span>
-        })}
+      <div className="scores">
+        <span style={{fontWeight:"700"}}>측정 결과</span>
+        {scores.map((score, idx) => (
+          <span key={idx} className="score">{idx + 1}번째 시도 {score}ms</span>
+        ))}
       </div>
     </div>
   );
